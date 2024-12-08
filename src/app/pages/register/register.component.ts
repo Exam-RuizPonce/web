@@ -8,11 +8,10 @@ import { LoginRequest } from '../../models/loginRequest.interface';
 import { LoginService } from '../../services/login.service';
 
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  imports: [ReactiveFormsModule, RouterModule, CommonModule],
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+    selector: 'app-register',
+    imports: [ReactiveFormsModule, RouterModule, CommonModule],
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
   registerForm: FormGroup;

@@ -5,11 +5,10 @@ import { UserService } from '../../services/user.service';
 import { UserResponse } from '../../models/userResponse.interface';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  imports: [CommonModule],
-  styleUrls: ['./dashboard.component.css'],
-  standalone: true
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    imports: [CommonModule],
+    styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
   user: UserResponse | null = null;

@@ -8,11 +8,10 @@ import { LoginRequest } from '../../models/loginRequest.interface';
 import { LoginResponse } from '../../models/loginResponse.interface';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  imports: [CommonModule, ReactiveFormsModule],
-  styleUrls: ['./login.component.css'],
-  standalone: true
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    imports: [CommonModule, ReactiveFormsModule],
+    styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   loginForm: FormGroup;
