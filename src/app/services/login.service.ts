@@ -17,4 +17,8 @@ export class LoginService {
   login(loginRequest: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(this.apiUrl, loginRequest);
   }
+  isLoggedIn(): boolean {
+    //Verifica si existe un token activo
+    return !!localStorage.getItem('token');
+  }
 }

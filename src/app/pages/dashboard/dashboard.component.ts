@@ -41,7 +41,8 @@ export class DashboardComponent implements OnInit {
   logout(): void {
     // Limpiar cualquier dato de la sesión
     localStorage.removeItem('token');
-    localStorage.removeItem('userEmail');
+    localStorage.removeItem('email');
+    localStorage.removeItem('user');
     this.router.navigate(['/login']);
   }
 }

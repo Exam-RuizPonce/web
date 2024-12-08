@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { UserRequest } from '../../models/userRequest.interface';
 import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
+import { LoginRequest } from '../../models/loginRequest.interface';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-register',
@@ -18,15 +20,13 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
+    private loginService: LoginService,
     private router: Router
   ) {
     this.registerForm = this.fb.group(
       {
         name: ['', Validators.required],
-        contact_number: [ // Cambiado a contact_number
-          '',
-          [Validators.required, Validators.pattern(/^\d{9}$/)]
-        ],
+        contact_number: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(6)]],
         password_confirmation: ['', Validators.required]
@@ -62,20 +62,35 @@ export class RegisterComponent {
       return;
     }
   
-    // Si pasa la validación, preparar el objeto para el servicio
+   
     const userRequest: UserRequest = {
       nombre: formValue.name,
       numeroDeContacto: formValue.contact_number,
       email: formValue.email,
       password: formValue.password
     };
-
-    // Llamada al servicio para registrar al usuario
+    //Crear la peticion de loginRequest para logearlo luego de registrar
+    const loginRequest: LoginRequest = {
+      email: formValue.email,
+      password: formValue.password
+    };
+ 
     this.userService.registerUser(userRequest).subscribe({
       next: (response) => {
-        alert('Registro exitoso. Redirigiendo al inicio de sesión.');
-        localStorage.setItem('user', JSON.stringify(response)); // Guardar el usuario en el almacenamiento local
-        this.router.navigate(['/dashboard']); // Redirigir a la página de inicio de sesión
+        alert('Registro exitoso. Redirigiendo al dashboard.');
+        localStorage.setItem('user', JSON.stringify(response));
+        this.loginService.login(loginRequest).subscribe({
+          next: (response) => {
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('user', JSON.stringify(response.user));
+            this.router.navigate(['/dashboard']); 
+          },
+          error: (err) => {
+            console.error('Error al iniciar sesion', err);
+            alert('Error al iniciar sesión');
+          }
+        });
+        this.router.navigate(['/login']); 
       },
       error: (err) => {
         console.error('Error al registrar usuario:', err);
@@ -83,4 +98,5 @@ export class RegisterComponent {
       }
     });
   }
+
 }
