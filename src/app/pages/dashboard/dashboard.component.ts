@@ -19,7 +19,8 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     const token = localStorage.getItem('token');
-    const email = localStorage.getItem('email');
+    const user = localStorage.getItem('user');
+    const email = user ? JSON.parse(user).email : null;
 
     if (token && email) {
       this.userService.getUserByEmail(email, token).subscribe({

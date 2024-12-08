@@ -32,18 +32,19 @@ export class LoginComponent {
   onSubmit(): void {
     if (this.loginForm.valid) {
       const loginRequest: LoginRequest = this.loginForm.value;
-      this.loginService.login(loginRequest).subscribe((response: LoginResponse) => {
-        // Guardar el token en el localStorage
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('email',loginRequest.email);
-        alert('¡Sesión Iniciada!');
-
-        // Redirige a la página principal u otra página después de iniciar sesión
-        this.router.navigate(['/dashboard']);
-      }, error => {
-        console.error('Error during login', error);
-        alert('Error al iniciar sesión. Verifica tus credenciales.');
-      });
+      console.log('Login request', loginRequest);
+      this.loginService.login(loginRequest).subscribe({
+        next: (response: LoginResponse) => {
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('user', JSON.stringify(response.user));
+          this.router.navigate(['/dashboard']);
+        },
+        error: (err) => {
+          console.error('Error logging in', err);
+          alert('Error al iniciar sesión');
+        }
+    });
     }
   }
+
 }

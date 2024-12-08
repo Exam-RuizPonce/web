@@ -4,12 +4,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { env } from '../envs/env';
 import { UserResponse } from '../models/userResponse.interface';
+import { UserRequest } from '../models/userRequest.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = `${env.baseURL}user/getUser`;
+  private apiUrl = `${env.baseURL}`;
 
   constructor(private http: HttpClient) {}
 
@@ -17,6 +18,11 @@ export class UserService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<UserResponse>(`${this.apiUrl}/${email}`, { headers });
+    return this.http.get<UserResponse>(`${this.apiUrl}user/getUser/${email}`, { headers });
   }
+
+  registerUser(userRequest: UserRequest): Observable<UserResponse> {
+    return this.http.post<UserResponse>(`${this.apiUrl}auth/register`, userRequest);
+  }
+
 }
