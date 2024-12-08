@@ -1,8 +1,7 @@
 // src/app/pages/login/login.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { LoginRequest } from '../../models/loginRequest.interface';
